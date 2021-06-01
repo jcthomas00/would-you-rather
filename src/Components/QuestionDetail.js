@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { vote } from '../Actions/shared';
+import PageNotFound from './PageNotFound';
 
 class QuestionDetail extends Component{
 
@@ -16,6 +17,8 @@ class QuestionDetail extends Component{
 
     render = () =>{
         const { question, users, authedUser } = this.props;
+        if(!question)
+            return <PageNotFound />
         let ans = question.optionOne.votes.includes(authedUser) ? 1:
                     (question.optionTwo.votes.includes(authedUser) ? 2:0);
         const ansOneTotal = question.optionOne.votes.length;
