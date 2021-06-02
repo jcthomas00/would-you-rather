@@ -1,12 +1,14 @@
 import { Component } from 'react';
 import { newQuestion } from '../Actions/shared';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class CreatePoll extends Component{
     state = {
         optionOneText: '',
         optionTwoText: '',
-        authedUser: this.props.authedUser
+        authedUser: this.props.authedUser,
+        toHome: false
     }
     handleChange = (e) => {
        const option =  {[e.target.id]:e.target.value}
@@ -17,11 +19,17 @@ class CreatePoll extends Component{
         this.props.dispatch(newQuestion(this.state));
         this.setState(()=>({
             optionOneText: '',
-            optionTwoText: ''
+            optionTwoText: '',
+            toHome: true
         }))
     }
     render = () => {
-        const { optionOneText, optionTwoText } = this.state;
+        const { optionOneText, optionTwoText, toHome } = this.state;
+
+        if(toHome){
+            return <Redirect to='/'/>
+        }
+          
         return (
             <div className="card">
                 <div className="card-header">
